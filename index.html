@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Roni Msallam</title>
-  <link rel="stylesheet" href="styles.css?v=4" />
+  <link rel="stylesheet" href="styles.css?v=7" />
 </head>
 <body>
   <header class="topbar">
@@ -17,8 +17,7 @@
     </div>
 
     <div class="top-actions">
-      <button id="btnFx" class="btn" type="button" title="Toggle effects">FX</button>
-      <button id="btnTheme" class="btn btn-accent" type="button" title="Switch accent">Theme</button>
+      <a class="btn" href="about.html">About</a>
     </div>
   </header>
 
@@ -39,68 +38,35 @@
           <h1 class="hero-title">One link. Everything I build.</h1>
 
           <p class="hero-sub">
-            I’m a third-year IT student (19 years old) based in Moscow, Russia, available for
-            part-time work and collaborations. I build modern websites and static web apps with clean UI,
-            strong structure, and practical features.
+            Third-year IT student (19) based in Moscow, Russia.
+            Available for part-time work and collaborations.
           </p>
 
-          <p class="hero-sub">
-            Languages: Russian • English • Arabic • Kurdish
-          </p>
-
-          <p class="hero-sub">
-            Tech: HTML • CSS • JavaScript • Git/GitHub • GitHub Pages
-          </p>
-
-          <p class="hero-sub">
-            What I build: portfolio & business sites • landing pages • UI dashboards • static apps
-          </p>
-
-          <p class="hero-sub">
-            Team workflow: branching, pull requests, small commits, and clear testing steps.
-          </p>
+          <div style="margin-top:16px;">
+            <a href="about.html" class="btn btn-accent">
+              Know more about me →
+            </a>
+          </div>
         </div>
       </div>
 
       <div class="hero-right">
-        <div class="avatar-wrap" aria-label="Abstract avatar">
-          <svg class="avatar" viewBox="0 0 300 300" role="img" aria-label="Abstract avatar">
-            <defs>
-              <radialGradient id="g1" cx="30%" cy="25%" r="80%">
-                <stop offset="0%" stop-color="rgba(255, 60, 90, 0.85)"/>
-                <stop offset="60%" stop-color="rgba(180, 30, 60, 0.45)"/>
-                <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
-              </radialGradient>
-              <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="rgba(255, 60, 90, 0.75)"/>
-                <stop offset="100%" stop-color="rgba(255, 0, 60, 0.10)"/>
-              </linearGradient>
-              <filter id="glow">
-                <feGaussianBlur stdDeviation="6" result="b"/>
-                <feMerge>
-                  <feMergeNode in="b"/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
-            </defs>
-
-            <rect x="0" y="0" width="300" height="300" fill="rgba(0,0,0,0)"/>
-            <circle cx="150" cy="150" r="118" fill="url(#g2)" />
-            <circle cx="125" cy="120" r="95" fill="url(#g1)" filter="url(#glow)" />
-
-            <circle cx="150" cy="150" r="126" fill="none" stroke="rgba(255,60,90,0.35)" stroke-width="2" stroke-dasharray="6 8"/>
-            <circle cx="150" cy="150" r="102" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="2" stroke-dasharray="10 10"/>
-
-            <path d="M150 75 L205 150 L150 225 L95 150 Z"
-                  fill="rgba(255,60,90,0.18)"
-                  stroke="rgba(255,60,90,0.45)"
-                  stroke-width="2"/>
-            <circle cx="150" cy="150" r="14" fill="rgba(255,60,90,0.65)"/>
-          </svg>
-
+        <!-- YOUR PHOTO (replace the file path with your real image file) -->
+        <div class="avatar-wrap" aria-label="Profile photo">
+          <img
+            src="assets/profile.jpg"
+            alt="Roni Msallam"
+            style="
+              width:100%;
+              height:100%;
+              object-fit:cover;
+              display:block;
+              border-radius:18px;
+            "
+          />
           <div class="avatar-hint">
-            <div class="hint-title">Links</div>
-            <div class="hint-sub">Click a card to open. Use Copy if needed.</div>
+            <div class="hint-title">Roni Msallam</div>
+            <div class="hint-sub">IT Student • Website Designer • App Maker</div>
           </div>
         </div>
       </div>
@@ -129,7 +95,7 @@
             <div class="project-title">Study Planner</div>
           </div>
           <div class="project-desc">
-            Static web app using LocalStorage (no backend). Demo plan + user plan, CRUD, export/import.
+            Static web app using LocalStorage. Demo plan + user plan, CRUD, export/import.
           </div>
           <div class="project-actions">
             <a class="btn btn-accent" id="studyPlannerLink" href="#" target="_blank" rel="noreferrer">Open Website</a>
@@ -143,7 +109,7 @@
             <div class="project-title">GitHub</div>
           </div>
           <div class="project-desc">
-            Source code, repositories, and public work.
+            Source code and public repositories.
           </div>
           <div class="project-actions">
             <a class="btn btn-accent" id="githubLink" href="#" target="_blank" rel="noreferrer">Open GitHub</a>
@@ -162,6 +128,6 @@
 
   <div id="toast" class="toast" style="display:none;"></div>
 
-  <script src="app.js?v=4"></script>
+  <script src="app.js?v=7"></script>
 </body>
 </html>

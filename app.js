@@ -2,12 +2,15 @@
 // Roni Profile - Single Page
 // ==========================
 
-const LINKS = {
+// Make LINKS available to other pages (about.html) safely:
+window.LINKS = {
   instagram: "https://www.instagram.com/roy36_6?igsh=MWQ3NDVudWV6aTQzOA%3D%3D&utm_source=qr",
   telegram: "https://t.me/ROY6SIX6",
   github: "https://github.com/sakuraa9",
   studyPlanner: "https://sakuraa9.github.io/study-planner/"
 };
+
+const LINKS = window.LINKS;
 
 const CARDS = [
   { key: "instagram", title: "Instagram", desc: "Main social profile (DMs + updates).", accent: "accent" },
@@ -25,7 +28,7 @@ const ACCENTS = [
 let accentIndex = 0;
 let expanded = false;
 
-// ---------- Terminal typing (NO STATUS LINE) ----------
+// Terminal typing (NO STATUS)
 const terminalLines = [
   "boot: profile_ui",
   "user: Roni Msallam",
@@ -33,11 +36,11 @@ const terminalLines = [
   "links: instagram, telegram, github, study planner"
 ];
 
-// ---------- Helpers ----------
 function $(id){ return document.getElementById(id); }
 
 function toast(msg){
   const el = $("toast");
+  if (!el) return;
   el.textContent = msg;
   el.style.display = "block";
   clearTimeout(toast._t);
@@ -64,22 +67,17 @@ function openLink(url){
 }
 
 function cardAccentStyle(accentKey){
-  const map = {
-    accent: "var(--accent)",
-    accent2: "var(--accent2)",
-    accent3: "var(--accent3)"
-  };
+  const map = { accent: "var(--accent)", accent2: "var(--accent2)", accent3: "var(--accent3)" };
   return map[accentKey] || "var(--accent)";
 }
 
-// ---------- Render link cards ----------
 function renderCards(){
   const grid = $("linksGrid");
-  grid.innerHTML = "";
+  if (!grid) return; // about.html doesn't have this grid
 
+  grid.innerHTML = "";
   CARDS.forEach(c => {
     const url = LINKS[c.key];
-
     const card = document.createElement("article");
     card.className = "card-inner link-card";
     card.tabIndex = 0;
@@ -100,8 +98,8 @@ function renderCards(){
       </div>
 
       <div class="link-actions" style="display:${expanded ? "flex" : "none"};">
-        <button class="btn btn-accent" data-action="open">Open</button>
-        <button class="btn" data-action="copy">Copy</button>
+        <button class="btn btn-accent" data-action="open" type="button">Open</button>
+        <button class="btn" data-action="copy" type="button">Copy</button>
       </div>
 
       ${expanded ? `<div class="small muted" style="margin-top:10px;"><span class="kbd">${url}</span></div>` : ``}
@@ -130,16 +128,15 @@ function renderCards(){
   });
 }
 
-// ---------- Terminal typing ----------
 function typeTerminal(){
   const el = $("terminalText");
+  if (!el) return; // about.html doesn't have it
   el.textContent = "";
   let line = 0;
   let char = 0;
 
   const tick = () => {
     if (line >= terminalLines.length) return;
-
     const current = terminalLines[line];
     el.textContent += current[char] || "";
     char++;
@@ -151,14 +148,12 @@ function typeTerminal(){
       setTimeout(tick, 260);
       return;
     }
-
     setTimeout(tick, 22);
   };
 
   tick();
 }
 
-// ---------- Theme / FX ----------
 function applyAccent(idx){
   const theme = ACCENTS[idx];
   Object.entries(theme.css).forEach(([k,v]) => {
@@ -172,37 +167,62 @@ function toggleFx(){
   toast(document.body.classList.contains("fx") ? "FX on" : "FX off");
 }
 
-// ---------- Wire project links ----------
 function wireProjectLinks(){
-  $("githubLink").href = LINKS.github;
-  $("studyPlannerLink").href = LINKS.studyPlanner;
+  const gh = $("githubLink");
+  const sp = $("studyPlannerLink");
+  const cgh = $("copyGithub");
+  const csp = $("copyPlanner");
 
-  $("copyGithub").onclick = () => copyText(LINKS.github);
-  $("copyPlanner").onclick = () => copyText(LINKS.studyPlanner);
+  if (gh) gh.href = LINKS.github;
+  if (sp) sp.href = LINKS.studyPlanner;
+
+  if (cgh) cgh.onclick = () => copyText(LINKS.github);
+  if (csp) csp.onclick = () => copyText(LINKS.studyPlanner);
 }
 
-// ---------- Expand all ----------
 function toggleExpand(){
   expanded = !expanded;
-  $("btnExpand").textContent = expanded ? "Collapse all" : "Expand all";
+  const btn = $("btnExpand");
+  if (btn) btn.textContent = expanded ? "Collapse all" : "Expand all";
   renderCards();
 }
 
-// ---------- Boot ----------
+function wireAboutLinks(){
+  const tg = $("tgLink");
+  const ig = $("igLink");
+  const gh = $("ghLink");
+
+  if (tg) tg.href = LINKS.telegram;
+  if (ig) ig.href = LINKS.instagram;
+  if (gh) gh.href = LINKS.github;
+}
+
 function boot(){
   document.body.classList.add("fx");
+
   typeTerminal();
   renderCards();
   wireProjectLinks();
+  wireAboutLinks();
 
-  $("btnFx").onclick = toggleFx;
-  $("btnExpand").onclick = toggleExpand;
+  const btnFx = $("btnFx");
+  const btnTheme = $("btnTheme");
+  const btnExpand = $("btnExpand");
 
-  $("btnTheme").onclick = () => {
-    accentIndex = (accentIndex + 1) % ACCENTS.length;
-    applyAccent(accentIndex);
-    renderCards();
-  };
+  if (btnFx) btnFx.onclick = toggleFx;
+  if (btnExpand) btnExpand.onclick = toggleExpand;
+
+  if (btnTheme) {
+    btnTheme.onclick = () => {
+      accentIndex = (accentIndex + 1) % ACCENTS.length;
+      applyAccent(accentIndex);
+      renderCards();
+    };
+  }
 }
 
-boot();
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", boot);
+} else {
+  boot();
+}
